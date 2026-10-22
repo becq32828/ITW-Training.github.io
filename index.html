@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>ITW Specialty Products · VPGM Copilot Enablement · Follow along</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --page:#f5f5f5;
+  --surface:#ffffff;
+  --surface-alt:#f3f2f1;
+  --ink:#161616;
+  --ink-soft:#424242;
+  --ink-faint:#6b6b6b;
+  --line:#e0e0e0;
+  --line-strong:#c8c6c4;
+  --brand:#0067b8;
+  --brand-soft:#eff6fc;
+  --accent:#8661c5;
+  --accent-soft:#f4f0fb;
+  --green:#107c41;
+  --green-soft:#eaf6ee;
+  --amber:#8a5700;
+  --amber-soft:#fdf6e7;
+  --code-bg:#f8f8f8;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1b1a19;--page:#141313;--surface:#252423;--surface-alt:#2f2e2d;
+    --ink:#f3f3f3;--ink-soft:#d4d4d4;--ink-faint:#a6a6a6;
+    --line:#3b3a39;--line-strong:#4f4d4b;
+    --brand:#6cb8f6;--brand-soft:#16293b;
+    --accent:#c5b3ec;--accent-soft:#2a2440;
+    --green:#6ccb96;--green-soft:#1b2e23;
+    --amber:#e8b768;--amber-soft:#332a18;
+    --code-bg:#1f1e1d;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-block-start:70px}
+body{
+  margin:0;background:var(--page);color:var(--ink);
+  font-family:"Segoe UI","Segoe UI Web (West European)",system-ui,-apple-system,sans-serif;
+  font-size:16px;line-height:1.6;
+}
+a{color:var(--brand)}
+.wrap{max-width:1140px;margin-inline:auto;padding-inline:24px}
+
+/* ---- Title banner ---- */
+.banner{background:var(--surface);border-block-end:1px solid var(--line);padding-block:30px 24px}
+.crumb{font-size:.82rem;color:var(--ink-faint);margin-block-end:10px}
+.crumb span{margin-inline:6px}
+.banner h1{margin:0 0 8px;font-size:2.1rem;font-weight:600;line-height:1.2}
+.banner p.lede{margin:0;max-width:70ch;color:var(--ink-soft)}
+.meta{margin-block-start:14px;font-size:.88rem;color:var(--ink-faint)}
+
+/* ---- At a glance ---- */
+.glance{
+  background:var(--surface-alt);border:1px solid var(--line);border-radius:6px;
+  padding:16px 20px;margin-block-start:22px;
+  display:grid;grid-template-columns:1fr;gap:12px;
+}
+@media (min-width:720px){.glance{grid-template-columns:repeat(4,1fr)}}
+.glance div b{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin-block-end:3px}
+.glance div span{font-size:.9rem;color:var(--ink)}
+
+/* ---- Layout: rail + content ---- */
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:34px 60px;align-items:start}
+@media (min-width:1000px){.layout{grid-template-columns:252px 1fr}}
+aside.rail{position:sticky;top:20px;font-size:.88rem}
+aside.rail h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint);margin:0 0 10px}
+aside.rail ol{list-style:none;margin:0;padding:0;border-inline-start:2px solid var(--line)}
+aside.rail li a{
+  display:block;padding:6px 0 6px 14px;text-decoration:none;color:var(--ink-soft);
+  margin-inline-start:-2px;border-inline-start:2px solid transparent;
+}
+aside.rail li a:hover{color:var(--brand);border-inline-start-color:var(--brand)}
+aside.rail li a.new::after{
+  content:"New";margin-inline-start:7px;font-size:.66rem;font-weight:700;
+  background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:999px;vertical-align:middle;
+}
+
+/* ---- Content blocks ---- */
+section{margin-block-end:40px;scroll-margin-block-start:24px}
+h2.sec{font-size:1.55rem;font-weight:600;margin:0 0 4px;padding-block-end:8px;border-block-end:1px solid var(--line)}
+h2.sec .dur{font-size:.85rem;font-weight:400;color:var(--ink-faint);margin-inline-start:10px}
+p.intro{color:var(--ink-soft);margin-block:12px 18px;max-width:78ch}
+
+.note{
+  background:var(--amber-soft);border:1px solid var(--line);border-inline-start:4px solid var(--amber);
+  border-radius:4px;padding:16px 20px;
+}
+.note h3{margin:0 0 10px;font-size:1rem;color:var(--amber)}
+.note ul{margin:0;padding-inline-start:20px}
+.note li{margin-block-end:7px;color:var(--ink-soft)}
+.note li b{color:var(--ink)}
+
+/* ---- Module card, Learn style ---- */
+.module{background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-block-end:22px;overflow:hidden}
+.module > header{padding:18px 22px 16px;border-block-end:1px solid var(--line)}
+.kicker{font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--brand)}
+.module h3{margin:5px 0 6px;font-size:1.22rem;font-weight:600}
+.module .facts{font-size:.85rem;color:var(--ink-faint)}
+.module .facts b{color:var(--ink-soft);font-weight:600}
+.module .desc{margin:10px 0 0;color:var(--ink-soft);font-size:.95rem;max-width:80ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-block-start:12px}
+.tag{font-size:.74rem;font-weight:700;padding:3px 10px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface-alt);color:var(--ink-soft)}
+.tag.tool{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+.tag.prod{background:var(--green-soft);color:var(--green);border-color:transparent}
+.tag.cw{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+
+/* ---- Unit outline ---- */
+ol.units{list-style:none;margin:0;padding:0}
+ol.units > li{border-block-end:1px solid var(--line);padding:16px 22px}
+ol.units > li:last-child{border-block-end:none}
+.unit-head{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+.unit-head .u{
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-faint);min-width:72px;
+}
+.unit-head h4{margin:0;font-size:1rem;font-weight:600}
+.unit-head .time{font-size:.8rem;color:var(--ink-faint)}
+.unit-body{margin-block-start:8px}
+.unit-body p{margin:0 0 10px;color:var(--ink-soft);font-size:.94rem;max-width:80ch}
+.usecase{font-size:.94rem;color:var(--ink-soft);margin:0 0 10px}
+.usecase b{color:var(--ink)}
+.lanes{display:grid;grid-template-columns:1fr;gap:10px;margin-block-end:12px}
+@media (min-width:680px){.lanes{grid-template-columns:1fr 1fr}}
+.lane{border:1px solid var(--line);border-radius:4px;padding:10px 13px;background:var(--bg);font-size:.88rem;color:var(--ink-soft)}
+.lane b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-block-end:3px}
+.plabel{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-block:14px 6px}
+/* ---- Copy button on each prompt ---- */
+.promptwrap{position:relative}
+.promptwrap pre.prompt{padding-inline-end:92px}
+.copybtn{
+  position:absolute;inset-block-start:8px;inset-inline-end:8px;
+  font-family:inherit;font-size:.74rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;cursor:pointer;
+  padding:5px 12px;border-radius:4px;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);
+  transition:background .12s,color .12s,border-color .12s;
+}
+.copybtn:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+.copybtn:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.copybtn[data-state="done"]{background:var(--green);color:#fff;border-color:var(--green)}
+.copybtn[data-state="fail"]{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+@media print{.copybtn{display:none}.promptwrap pre.prompt{padding-inline-end:16px}}
+pre.prompt{
+  margin:0;background:var(--code-bg);border:1px solid var(--line);border-inline-start:3px solid var(--brand);
+  border-radius:4px;padding:13px 16px;font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+  font-size:.855rem;line-height:1.55;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere;
+}
+pre.prompt.cw{border-inline-start-color:var(--accent)}
+pre.prompt.weak{border-inline-start-color:var(--line-strong);color:var(--ink-faint)}
+.takeaway{
+  background:var(--brand-soft);border-radius:4px;padding:11px 15px;font-size:.9rem;color:var(--ink-soft);
+}
+.takeaway b{color:var(--brand)}
+
+/* ---- Tables ---- */
+table{border-collapse:collapse;width:100%;font-size:.89rem;margin-block-start:12px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:start;vertical-align:top}
+th{background:var(--surface-alt);font-weight:600}
+caption{caption-side:top;text-align:start;font-size:.85rem;color:var(--ink-faint);padding-block-end:6px}
+
+.cards3{display:grid;grid-template-columns:1fr;gap:14px;margin-block-start:14px}
+@media (min-width:760px){.cards3{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:15px 18px}
+.card h4{margin:0 0 6px;font-size:1rem}
+.card p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+ul.plain{margin:10px 0 0;padding-inline-start:20px}
+ul.plain li{margin-block-end:7px;color:var(--ink-soft)}
+ul.plain li b{color:var(--ink)}
+
+footer.page{border-block-start:1px solid var(--line);padding-block:24px 40px;color:var(--ink-faint);font-size:.86rem}
+footer.page p{margin:0 0 6px;max-width:85ch}
+
+@media print{
+  aside.rail{display:none}
+  .layout{grid-template-columns:1fr}
+  .module{break-inside:avoid}
+  body{background:#fff}
+}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.placeholder{background:#fff4ce;color:#5c4400;border:1px dashed #b98a00;border-radius:3px;padding:1px 6px;font-weight:700;white-space:normal}
+@media (prefers-color-scheme: dark){.placeholder{background:#3d3214;color:#ffd978;border-color:#c99a1f}}
+mark.br{background:#fff4ce;color:inherit;border-radius:2px;padding:0 2px}
+@media (prefers-color-scheme: dark){mark.br{background:#4a3c12}}
+.quick{background:var(--brand-soft);border:1px solid var(--line);border-inline-start:4px solid var(--brand);border-radius:6px;padding:18px 22px}
+.quick h2{margin:0 0 8px;font-size:1.15rem}
+ol.quicksteps{margin:0;padding-inline-start:22px}
+ol.quicksteps li{margin-block-end:8px;color:var(--ink-soft)}
+ol.quicksteps li b{color:var(--ink)}
+.quicknote{margin:10px 0 0;font-size:.9rem;color:var(--ink-soft)}
+.copybtn{background:var(--brand);color:#fff;border-color:var(--brand);font-size:.8rem;padding:6px 14px}
+.copybtn:hover{filter:brightness(1.1)}
+.files{display:block;margin-block-start:6px;font-size:.8rem;color:var(--ink-faint)}
+.caution{font-size:.86rem;color:var(--amber);margin:4px 0 8px}
+.tag.caution-tag{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.tag.src-itw{background:var(--green-soft);color:var(--green);border-color:transparent}
+table.agenda td.clock{white-space:nowrap;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+table.anatomy{margin-block-end:6px}
+.checks{display:grid;grid-template-columns:1fr;gap:8px;margin-block:6px 4px}
+@media (min-width:680px){.checks{grid-template-columns:1fr 1fr}}
+.checks div{border:1px solid var(--line);border-radius:4px;padding:9px 12px;background:var(--bg);font-size:.92rem}
+.checks span,.steps3 span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;font-size:.75rem;font-weight:700;margin-inline-end:8px}
+.steps3{display:grid;grid-template-columns:1fr;gap:10px;margin-block:4px 18px}
+@media (min-width:760px){.steps3{grid-template-columns:repeat(3,1fr)}}
+.steps3 div{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:.92rem;color:var(--ink-soft)}
+.libtools{position:sticky;top:0;z-index:2;background:var(--page);padding-block:10px 6px}
+#libsearch{width:100%;font:inherit;padding:10px 14px;border:1px solid var(--line-strong);border-radius:6px;background:var(--surface);color:var(--ink)}
+#libsearch:focus{outline:2px solid var(--brand);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-block-start:10px}
+.chip{font:inherit;font-size:.8rem;padding:4px 12px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);cursor:pointer}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.libcount{font-size:.8rem;color:var(--ink-faint);margin:8px 0 0}
+h3.libgroup{font-size:1.05rem;margin:22px 0 10px}
+.libgrid{display:grid;grid-template-columns:1fr;gap:14px}
+.libcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.libhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+.libhead h4{margin:0;font-size:1rem}
+.libhead .tags{margin:0}
+.libmeta{font-size:.82rem;color:var(--ink-faint);margin:4px 0 10px}
+.libmeta b{color:var(--ink-soft)}
+.libempty{color:var(--ink-faint)}
+.toast{position:fixed;inset-block-end:20px;inset-inline-start:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:6px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+@media print{.libtools,.toast{display:none}}
+</style>
+</head>
+<body>
+<div class="banner"><div class="wrap">
+<div class="crumb">ITW Specialty Products <span>›</span> Microsoft 365 Copilot <span>›</span> VPGM enablement</div>
+<h1>VPGM Copilot Enablement · follow along</h1>
+<p class="lede">Ten minutes on writing a prompt and checking the answer, four leadership tasks you run yourself, then ITW's own prompt library. Every demo uses one worked example, <b>Rain-X</b> in the <b>windshield wipers</b> category, so the skills build into one story.</p>
+<p class="meta">Monday 26 October 2026 · 9:30 – 11:00 AM CT · 90 minutes · Keep this page open beside Copilot.</p>
+<div class="glance"><div><b>Level</b><span>Mixed: from first prompts to daily use</span></div><div><b>Audience</b><span>VPGMs, segment leaders and division IT managers</span></div><div><b>Runs on</b><span>Copilot Chat · Researcher · Analyst · Word, Excel, PowerPoint, Outlook, Teams</span></div><div><b>Format</b><span>Follow along: Watch → Your turn → Challenge</span></div></div>
+</div></div>
+<div class="wrap layout">
+<aside class="rail"><h2>On this page</h2><ol><li><a href="#start">How to use this page</a></li><li><a href="#how">Today at a glance</a></li><li><a href="#basics" class="new">Start here · prompt + check</a></li><li><a href="#a1">1 · Explore the market</a></li><li><a href="#a2">2 · Turn data into a decision</a></li><li><a href="#a3">3 · Compress the compliance pile</a></li><li><a href="#a4">4 · Prepare the executive briefing</a></li><li><a href="#library" class="new">Make it yours · Prompt library</a></li><li><a href="#builder">Prompt builder</a></li><li><a href="#pack">Sample files</a></li><li><a href="#after">After today</a></li><li><a href="#followup">Appendix · Cowork follow-up</a></li></ol></aside>
+<main>
+<section id="start" class="quick"><h2>How to use this page</h2><ol class="quicksteps"><li><b>Open Copilot</b> in your browser or in Teams and keep this page beside it. Use the <b>Work</b> tab so Copilot can see your mail, chats, meetings and files.</li><li><b>Get the sample files</b> for Lane A: <span class="placeholder">[SAMPLE FILES LINK: to be added before the session]</span>. Save them to your OneDrive so you can attach them.</li><li><b>Click Copy</b> on any prompt, paste it into Copilot, and replace anything in <mark class="br">[brackets]</mark>.</li><li><b>Pick a lane</b> each time. Lane A uses the sample files. Lane B uses your own work, on your own screen, where nobody else can see it.</li></ol><p class="quicknote"><b>Can't find Researcher or Analyst?</b> They are in the agents list in Copilot. If they are not there for you, run the same prompt in Copilot Chat. The answer is thinner, but the lesson is the same.</p></section><section id="how"><h2 class="sec">Today at a glance</h2><p class="intro">A short start on prompting and checking, four areas that each run the same three units, then your own prompt. You are expected to do the middle unit every time.</p><table class="agenda"><tr><th style="width:18%">Clock</th><th>Block</th><th style="width:34%">Runs on</th></tr><tr><td class="clock">0:00 – 0:05</td><td><b>Welcome and how this works</b></td><td></td></tr><tr><td class="clock">0:05 – 0:15</td><td><b>Start here · a good prompt, and an answer you can check</b></td><td>Copilot Chat</td></tr><tr><td class="clock">0:15 – 0:30</td><td><b>1 · Explore the market</b></td><td>Researcher</td></tr><tr><td class="clock">0:30 – 0:47</td><td><b>2 · Turn data into a decision</b></td><td>Analyst · Excel</td></tr><tr><td class="clock">0:47 – 1:02</td><td><b>3 · Compress the compliance pile</b></td><td>Copilot Chat · Word</td></tr><tr><td class="clock">1:02 – 1:19</td><td><b>4 · Prepare the executive briefing</b></td><td>Outlook · Teams · PowerPoint · Word</td></tr><tr><td class="clock">1:19 – 1:27</td><td><b>Make it yours · the ITW prompt library</b></td><td>Your choice</td></tr><tr><td class="clock">1:27 – 1:30</td><td><b>Close and two-minute survey</b></td><td></td></tr></table><div class="cards3"><div class="card"><h4>Unit 1 · Watch · 5 min</h4><p>The scenario runs end to end on Rain-X sample data. No feature tour.</p></div><div class="card"><h4>Unit 2 · Your turn · 6 min</h4><p>You run it. Lane A is the Rain-X sample pack. Lane B is your own real content on your own screen.</p></div><div class="card"><h4>Unit 3 · Challenge · 3–4 min</h4><p>A harder variant of the same prompt. Post one line of your result in the chat.</p></div></div><h3 style="font-size:1.05rem;margin-block:26px 4px">Outcomes of this workshop</h3><div class="cards3"><div class="card"><h4>Prompt + check first</h4><p>Ten minutes on what makes a prompt work and how to challenge the answer. Then we apply it to four real leadership tasks.</p></div><div class="card"><h4>Where to run it</h4><p>Use public or grounded sources with the right tool to produce results you can act on for decision making.</p></div><div class="card"><h4>Right prompt, right results</h4><p>Demonstrating the prompt and its result together. Practice prompts to get insights that support decision making and improve everyday productivity.</p></div></div><p class="intro" style="margin-block-start:18px"><b>Two ground rules.</b> Everything on the presenter's screen is invented sample data, and the Rain-X figures are fictional. On <i>your</i> screen, use your real work, following ITW's AI acceptable-use policy. Policy questions are welcome after the session with your division IT manager.</p></section><section id="basics"><h2 class="sec">Start here · a good prompt, and an answer you can check<span class="dur">0:05 – 0:15</span></h2><article class="module"><header><div class="kicker">Start here · 10 min · 3 units</div><h3>Four parts make a prompt work. Four follow-ups make the answer safe to use.</h3><div class="facts"><b>Runs on:</b> Copilot Chat (Work) · <b>Covers:</b> what a prompt is, why context matters, checking the answer, model choice, preparing your week</div><p class="desc"><b>Use case.</b> It is Monday morning. Last week left decisions, promises and risks scattered across your mail, chats and meetings. You want one page that tells you what you owe and what is owed to you, and you want to know you can trust it.</p><div class="tags"><span class="tag tool">Copilot Chat</span><span class="tag prod">ITW prompt: Monday catch-up</span></div></header><ol class="units"><li><div class="unit-head"><span class="u">Unit 1</span><h4>Watch · the anatomy of a good prompt</h4><span class="time">4 min</span></div><div class="unit-body"><p>Every prompt in ITW's own library follows the same four parts. Leave one out and Copilot fills the gap with a guess.</p><table class="anatomy"><tr><th style="width:16%">Part</th><th style="width:32%">What it does</th><th>Example</th></tr><tr><td><b>Goal</b></td><td>The decision or output you need.</td><td>"Prepare me for my quarterly review with [name] on [date]."</td></tr><tr><td><b>Context</b></td><td>Who it is for and what is at stake.</td><td>"My segment president will challenge every number."</td></tr><tr><td><b>Sources</b></td><td>What Copilot may use, and only that.</td><td>"Use my emails, Teams chats and meetings from last week."</td></tr><tr><td><b>Format</b></td><td>Exactly what comes back.</td><td>"Max one page. Owner and source for each item."</td></tr></table><div class="plabel">Before · the prompt most people type</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt weak">Summarize my week.</pre></div><div class="plabel">After · ITW prompt "Monday catch-up"</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Review my emails, Teams chats and meetings from last week. List: (1) decisions I owe, (2) commitments others made to me that are still open, (3) emerging risks. Owner and source for each. Max one page.</pre></div></div></li><li><div class="unit-head"><span class="u">Unit 2</span><h4>Your turn · run your Monday catch-up</h4><span class="time">4 min</span></div><div class="unit-body"><div class="lanes"><div class="lane"><b>Lane A · sample files</b>Attach the sample email threads and run the version below.<span class="files">Attach: ITW Rain-X Executive Email Threads SAMPLE v2.docx</span></div><div class="lane"><b>Lane B · your own work</b>Run the "After" prompt above exactly as written on your own mail, chats and meetings.</div></div><div class="plabel">Lane A · open Copilot Chat, attach the file, then paste</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Review the email threads in this document. List: (1) decisions I owe, (2) commitments others made to me that are still open, (3) emerging risks. Owner and source for each. Max one page.</pre></div></div></li><li><div class="unit-head"><span class="u">Unit 3</span><h4>Challenge · don't trust it, check it</h4><span class="time">2 min</span></div><div class="unit-body"><p>Use Copilot like a consultant, not an oracle. In the same conversation, ask any of these follow-ups, then click two of the citations it gives you.</p><div class="checks"><div><span>1</span>"Show me the source for each point."</div><div><span>2</span>"What did you assume that I did not tell you?"</div><div><span>3</span>"What could you not verify?"</div><div><span>4</span>"Give me the strongest case against this."</div></div><div class="plabel">All four follow-ups in one block</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Show me the source for each point.
+
+What did you assume that I did not tell you?
+
+What could you not verify?
+
+Give me the strongest case against this.</pre></div><p class="usecase" style="margin-block-start:12px"><b>Model choice.</b> Where Copilot offers more than one model, run the same prompt on a second one. Where the two answers disagree is exactly where you check. You will do this in Area 4 with ITW's "Second opinion" prompt.</p><div class="takeaway"><b>The move you are learning.</b> Check the answer. Ask for sources, assumptions and gaps before you use anything Copilot gives you.</div></div></li></ol></article></section><!-- ============ AREA 1 ============ -->
+  <section id="a1">
+    <h2 class="sec">Area 1 · Explore the market<span class="dur">0:15 – 0:30</span></h2>
+    <article class="module">
+      <header>
+        <div class="kicker">Area 1 of 4 · 15 min · 3 units</div>
+        <h3>Category intelligence you can defend in front of a distributor</h3>
+        <div class="facts"><b>Runs on:</b> Researcher · <b>Covers:</b> business insights, real-world leadership use cases</div>
+        <p class="desc"><b>Use case.</b> You are meeting a national auto-parts distributor about Rain-X wiper blades and wiper fluid. They will open with how the Rain-X windshield wiper product stacks up against competitors. Everything you need is public, none of it is in one place, and you have twenty minutes.</p>
+        <div class="tags">
+          <span class="tag tool">Researcher</span>
+          <span class="tag prod">Product: Rain-X</span>
+          <span class="tag prod">Category: windshield wipers</span>
+        </div>
+      </header>
+      <ol class="units">
+        <li>
+          <div class="unit-head"><span class="u">Unit 1</span><h4>Watch — a category review with sources you can click</h4><span class="time">5 min</span></div>
+          <div class="unit-body">
+            <p>Researcher tackles complex questions with multi-step reasoning and real sources — here, the Rain-X brand and the windshield wiper category. Results carry deep reasoning and detailed information with citations you can open live for further context, plus an explicit list of what it could not verify.</p>
+            <p><b>Why Researcher and not Chat:</b> Chat gives you a fast answer. Researcher plans a multi-step investigation across the web and your work content, and hands back something you can defend when someone senior pushes on it.</p>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 2</span><h4>Your turn — use case: Rain-X product and the windshield wipers category</h4><span class="time">6 min</span></div>
+          <div class="unit-body">
+            <div class="lanes">
+              <div class="lane"><b>Lane A · sample files</b>Rain-X and the windshield wiper category, using our public brand sites. Everything Researcher finds is already public.</div>
+              <div class="lane"><b>Lane B · your own work</b>Your own brand and category, with your own competitor named. It is your screen.</div>
+            </div>
+            <div class="plabel">Open the Researcher agent · paste this prompt</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Provide three things changing in the windshield wiper and washer fluid category that would change how I price or position Rain-X over the next twelve months.
+
+Name the competitors that matter most to Rain-X.
+
+Cite every source with its date. Tell me plainly what you could not verify.</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 3</span><h4>Challenge — make it refuse to guess</h4><span class="time">3 min</span></div>
+          <div class="unit-body">
+            <div class="plabel">Challenge · stay in the same conversation and paste this</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now add: use only sources published in the last eighteen months, and if something is not in those sources say "not in the source" rather than estimating it.
+
+Then tell me which of your three findings about the wiper category is the weakest, and why.</pre></div>
+            <p style="margin-block-start:10px">Watch how much shorter the answer gets, and how much more useful it becomes.</p>
+            <div class="takeaway"><b>The move you are learning.</b> Constrain the evidence. Name the sources it may use, and make it tell you what it could not find.</div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  <!-- ============ AREA 2 ============ -->
+  <section id="a2">
+    <h2 class="sec">Area 2 · Turn data into a decision<span class="dur">0:30 – 0:47</span></h2>
+    <article class="module">
+      <header>
+        <div class="kicker">Area 2 of 4 · 17 min · 3 units</div>
+        <h3>The story your Rain-X numbers are actually telling</h3>
+        <div class="facts"><b>Runs on:</b> Analyst and Copilot in Excel · <b>Covers:</b> trend analysis, data-driven decision support</div>
+        <p class="desc"><b>Use case.</b> The Rain-X quarter closed with revenue up on last year and short of plan. Wiper blades and wiper fluid are both in there, and winter seasonality flatters everything. Someone senior is going to ask whether the growth is real, and the answer is sitting in a workbook nobody has opened.</p>
+        <div class="tags">
+          <span class="tag tool">Analyst</span>
+          <span class="tag tool">Copilot in Excel</span>
+          <span class="tag prod">Product: Rain-X</span>
+          <span class="tag prod">Category: windshield wipers</span>
+        </div>
+      </header>
+      <ol class="units">
+        <li>
+          <div class="unit-head"><span class="u">Unit 1</span><h4>Watch — price, volume and mix decomposed in ninety seconds</h4><span class="time">5 min</span></div>
+          <div class="unit-body">
+            <p>Analyst turns raw data into insight like a skilled data analyst. Here it analyses the Rain-X wiper workbook and decomposes the year-on-year change into price, volume and mix, then shows its working so the number survives a finance review.</p>
+            <p><b>Why Analyst and not Copilot in Excel alone:</b> Copilot in Excel is the right tool inside a clean sheet — formulas, pivots, "explain this column". Analyst writes and runs its own code against messy multi-tab extracts and reasons to a conclusion. Analyst for "what is this telling me", Copilot in Excel for "now build it".</p>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 2</span><h4>Your turn — point it at a workbook and make it commit</h4><span class="time">6 min</span></div>
+          <div class="unit-body">
+            <div class="lanes">
+              <div class="lane"><b>Lane A · sample files</b>The Rain-X wiper workbook in the data pack — 24 months by region, channel and SKU, live formulas, nothing confidential.<span class="files">Attach: ITW Rain-X Wiper Category Performance SAMPLE v2.xlsx</span></div>
+              <div class="lane"><b>Lane B · your own work</b>Your own last close. This is the one where five minutes genuinely pays for itself.</div>
+            </div>
+            <div class="plabel">Open the Analyst agent · attach the workbook, then paste this prompt</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">In this workbook [reference the workbook using "/"], tell me how much of the change versus last year came from price rather than volume, name every line where volume went backwards and quantify each one.
+
+Then show me the insights and calculation in a separate tab.
+
+Criteria:
+- Strip out winter seasonality and tell me what trend is left underneath it.
+- Flag any wiper SKU where price and volume are moving in directions that should worry me.</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 3</span><h4>Challenge — trend, or noise?</h4><span class="time">4 min</span></div>
+          <div class="unit-body">
+            <div class="plabel">Challenge · stay in the same conversation and paste this</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now make it commit: is this a trend or is it noise? Do not hedge.
+
+Tell me what evidence would settle it, and exactly what you would need to see in next month's wiper numbers to change your answer.</pre></div>
+            <p style="margin-block-start:10px">Forcing a falsifiable claim is the most advanced thing in this session. A number you can argue with beats a number you cannot.</p>
+            <div class="plabel">Stretch · ITW prompt "80/20 first cut" · Analyst or Copilot in Excel</div><p class="caution">Sanitized data only. On the sample workbook this works as-is; on your own data, use a sanitized export.</p><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Using this export, rank customers and products by revenue and margin, identify the A/B splits, and build a customer x product quad view. Show which 20% drives 80% of margin, list data quality issues, and explain the method so I can check it.</pre></div><p style="margin-block-start:10px"></p><div class="takeaway"><b>The move you are learning.</b> Demand the calculation and the insights, not just the answer. An analysis you cannot check is an analysis you cannot defend.</div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  <!-- ============ AREA 3 ============ -->
+  <section id="a3">
+    <h2 class="sec">Area 3 · Compress the compliance pile<span class="dur">0:47 – 1:02</span></h2>
+    <article class="module">
+      <header>
+        <div class="kicker">Area 3 of 4 · 15 min · 3 units</div>
+        <h3>Hundreds of documents into a one-page position</h3>
+        <div class="facts"><b>Runs on:</b> Copilot Chat across your files, then Copilot in Word · <b>Covers:</b> the SDS / EHS use case, Word</div>
+        <p class="desc"><b>Use case.</b> A regulator drops a substance threshold that touches windshield wiper fluid. You have the Rain-X wiper fluid safety data sheets, a formulation register and a bulletin written by a lawyer. Which Rain-X products are affected, and what does it cost?</p>
+        <div class="tags">
+          <span class="tag tool">Copilot Chat</span>
+          <span class="tag tool">Copilot in Word</span>
+          <span class="tag prod">Product: Rain-X</span>
+          <span class="tag prod">Category: windshield wipers</span>
+        </div>
+      </header>
+      <ol class="units">
+        <li>
+          <div class="unit-head"><span class="u">Unit 1</span><h4>Watch — affected, not affected, and cannot be determined</h4><span class="time">5 min</span></div>
+          <div class="unit-body">
+            <p>Copilot reads the whole Rain-X wiper-fluid pile and returns a product-by-product table with the revenue in each column. It flags the one product it genuinely cannot classify, and it names the place where two of our own documents disagree.</p>
+            <p><b>Why Copilot Chat here:</b> this is a grounding job, not a reasoning job. Chat reads across many documents at once and cites the file behind each statement. Copilot in Word then turns the result into the document you actually circulate.</p>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 2</span><h4>Your turn — reference several documents and ask Copilot to provide answers</h4><span class="time">6 min</span></div>
+          <div class="unit-body">
+            <div class="lanes">
+              <div class="lane"><b>Lane A · sample files</b>The sample bulletin, the eight Rain-X wiper-fluid data sheets and the formulation register, all in the data pack.<span class="files">Attach: ITW Rain-X Regulatory Bulletin ICHB Rev 7 SAMPLE v2.docx · ITW Rain-X Safety Data Sheets SAMPLE v2.docx · ITW Rain-X Product Formulation Register SAMPLE v2.xlsx</span></div>
+              <div class="lane"><b>Lane B · your own work</b>Any folder of your own documents you have been quietly avoiding reading.</div>
+            </div>
+            <div class="plabel">Open Copilot Chat (Work) · paste this prompt</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Using only these documents, build me a table of every product with three columns: affected, not affected, or cannot be determined from what I have given you.
+
+Quantify the revenue in each column.
+
+Where the answer is "cannot be determined", tell me exactly which document would settle it.
+
+Do not resolve gaps yourself. List them under a heading called "Open items".</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 3</span><h4>Challenge — find the contradiction</h4><span class="time">3 min</span></div>
+          <div class="unit-body">
+            <div class="plabel">Challenge · stay in the same conversation and paste this</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now ask it where two of these documents disagree with each other.
+
+Show me both statements side by side and tell me which one to trust and why.</pre></div>
+            <p style="margin-block-start:10px">There is a real contradiction in the sample pack. Find it — first person to post it in the chat wins.</p>
+            <div class="takeaway"><b>The move you are learning.</b> Hunt the contradiction, not just the summary. Anyone can get a summary. Finding where your own documents disagree is the thing you could not do by hand.</div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  <!-- ============ AREA 4 ============ -->
+  <section id="a4">
+    <h2 class="sec">Area 4 · Prepare the executive briefing<span class="dur">1:02 – 1:19</span></h2>
+    <article class="module">
+      <header>
+        <div class="kicker">Area 4 of 4 · 17 min · 3 units</div>
+        <h3>Walk into the Rain-X review already ready</h3>
+        <div class="facts"><b>Runs on:</b> Copilot Chat across Outlook, Teams, PowerPoint and Word · <b>Covers:</b> strategic decision-making and briefing prep</div>
+        <p class="desc"><b>Use case.</b> You have the Rain-X category review on Thursday. The answer is spread across a mailbox, a meeting you half attended and a memo nobody read. You have twenty minutes before it starts.</p>
+        <div class="tags">
+          <span class="tag tool">Copilot Chat</span>
+          <span class="tag tool">Outlook · Teams · PowerPoint · Word</span>
+          <span class="tag prod">Product: Rain-X</span>
+          <span class="tag prod">Category: windshield wipers</span>
+        </div>
+      </header>
+      <ol class="units">
+        <li>
+          <div class="unit-head"><span class="u">Unit 1</span><h4>Watch — one decision through four apps</h4><span class="time">5 min</span></div>
+          <div class="unit-body">
+            <p>Outlook groups the Rain-X mail by the decision it is blocking rather than by sender. Teams recaps what was decided versus deferred. PowerPoint turns the memo into five slides whose titles state the point. Word lands it as a one-page recommendation.</p>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 2</span><h4>Your turn — take a real meeting you have this week and ask for suggestions</h4><span class="time">6 min</span></div>
+          <div class="unit-body">
+            <div class="lanes">
+              <div class="lane"><b>Lane A · sample files</b>The sample Rain-X memo, email threads and meeting transcript in the data pack.<span class="files">Attach: ITW Rain-X Q3 Business Review Memo SAMPLE v2.docx · ITW Rain-X Executive Email Threads SAMPLE v2.docx · ITW Rain-X Leadership Meeting Transcript SAMPLE v2.docx · ITW Rain-X Q3 Segment Review DRAFT v4 SAMPLE v2.pptx</span></div>
+              <div class="lane"><b>Lane B · your own work</b>Your own calendar. Pick the hardest meeting you have between now and Friday.</div>
+            </div>
+            <div class="plabel">Open Copilot Chat (Work) · paste this prompt</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Build me a one-page brief for this meeting. Structure it as: my position in two sentences, then three pieces of evidence each with a figure and where it came from, then what I am asking for.
+
+No adjective I cannot defend with a number.
+
+Then tell me the two hardest questions I will be asked.
+
+Criteria:
+- Use my mail, meetings and files from the last 90 days on Rain-X and windshield wipers.
+- Include where we landed last quarter on Rain-X and what has slipped since.
+- Cite the mail or document behind each point so I can open it.</pre></div><div class="plabel">Or use ITW prompt "Review prep" · Copilot Chat</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Prepare me for my [monthly/quarterly] review with [name] on [date]. Use the latest emails, decks and meeting notes on [topics]. Give me: 5 headlines, 3 numbers to know, 3 likely tough questions with suggested answers.</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 3</span><h4>Challenge — the line worth stealing</h4><span class="time">4 min</span></div>
+          <div class="unit-body">
+            <div class="plabel">Challenge · stay in the same conversation and paste this</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now add the line worth stealing: give me the strongest argument against my position, and the single fact that would make me change my mind.</pre></div>
+            <p style="margin-block-start:10px">If you take one sentence away from this hour, take that one. It works on every decision you will make this quarter.</p>
+            <div class="plabel">Then · ITW prompt "Second opinion" · run it on two models</div><p class="usecase">Where Copilot offers more than one model, run this once, switch model, and run it again. Where the two answers disagree is exactly where you check.</p><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">I&#x27;m about to decide [decision]. Give me the strongest case for, the strongest case against, the assumptions that matter most, and the facts that would change your recommendation.</pre></div><p style="margin-block-start:10px"></p><div class="takeaway"><b>The move you are learning.</b> Ask for the argument against you. Decision quality improves more from a good adversary than from more analysis.</div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  <section id="library"><h2 class="sec">Make it yours · the ITW prompt library<span class="dur">1:19 – 1:27</span></h2><p class="intro">Twelve prompts written by ITW for ITW leaders, plus every prompt from today. Each one follows the same structure: <b>goal + context + sources + format</b>.</p><div class="steps3"><div><span>1</span>Pick <b>one</b> ITW prompt that matches a job on your desk this week.</div><div><span>2</span>Click <b>Copy</b>, paste it into Copilot and replace everything in <mark class="br">[brackets]</mark>.</div><div><span>3</span>In the Teams chat, post which one you ran and one line of what came back.</div></div><div class="libtools"><label class="sr" for="libsearch">Search prompts</label><input id="libsearch" type="search" placeholder="Search prompts, for example: review, margin, customer, email" autocomplete="off"><div class="chips" role="group" aria-label="Filter prompts"><button class="chip on" data-f="all" type="button">All</button><button class="chip" data-f="src:itw" type="button">ITW prompts (12)</button><button class="chip" data-f="g:Leadership rhythm" type="button">Leadership rhythm</button><button class="chip" data-f="g:80/20 Front-to-Back" type="button">80/20 Front-to-Back</button><button class="chip" data-f="g:Customer-Back Innovation" type="button">Customer-Back Innovation</button><button class="chip" data-f="g:Strategic Sales Excellence" type="button">Strategic Sales Excellence</button><button class="chip" data-f="g:USa + AI" type="button">USa + AI</button><button class="chip" data-f="g:Stress-test" type="button">Stress-test</button><button class="chip" data-f="src:session" type="button">Today's session prompts (10)</button></div><p class="libcount" aria-live="polite"></p></div><p class="caution" style="margin-block:4px 14px">Two ITW prompts carry a data rule: <b>80/20 first cut</b> uses sanitized data only, and <b>Pain-point mining</b> uses Legal-cleared data only. Follow ITW's AI acceptable-use policy for anything you paste or attach.</p><h3 class="libgroup">ITW leadership prompts</h3><div class="libgrid"><article class="libcard" data-group="Leadership rhythm" data-src="itw" data-text="leadership rhythm monday catch-up copilot chat (work) review my emails, teams chats and meetings from last week. list: (1) decisions i owe, (2) commitments others made to me that are still open, (3) emerging risks. owner and source for each. max one page."><div class="libhead"><h4>Monday catch-up</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Leadership rhythm</b> · Run in: Copilot Chat (Work)</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Review my emails, Teams chats and meetings from last week. List: (1) decisions I owe, (2) commitments others made to me that are still open, (3) emerging risks. Owner and source for each. Max one page.</pre></div></article><article class="libcard" data-group="Leadership rhythm" data-src="itw" data-text="leadership rhythm review prep copilot chat (work) prepare me for my [monthly/quarterly] review with [name] on [date]. use the latest emails, decks and meeting notes on [topics]. give me: 5 headlines, 3 numbers to know, 3 likely tough questions with suggested answers."><div class="libhead"><h4>Review prep</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Leadership rhythm</b> · Run in: Copilot Chat (Work)</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Prepare me for my [monthly/quarterly] review with [name] on [date]. Use the latest emails, decks and meeting notes on [topics]. Give me: 5 headlines, 3 numbers to know, 3 likely tough questions with suggested answers.</pre></div></article><article class="libcard" data-group="Leadership rhythm" data-src="itw" data-text="leadership rhythm message to the organization copilot chat, or copilot in outlook draft a 180-word message to plant and functional leaders about [priority]. plain language, no jargon. end with a ‘what i need from you’ list: 3 actions with owners and dates."><div class="libhead"><h4>Message to the organization</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Leadership rhythm</b> · Run in: Copilot Chat, or Copilot in Outlook</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Draft a 180-word message to plant and functional leaders about [priority]. Plain language, no jargon. End with a ‘What I need from you’ list: 3 actions with owners and dates.</pre></div></article><article class="libcard" data-group="80/20 Front-to-Back" data-src="itw" data-text="80/20 front-to-back 80/20 first cut analyst, or copilot in excel using this export, rank customers and products by revenue and margin, identify the a/b splits, and build a customer x product quad view. show which 20% drives 80% of margin, list data quality issues, and explain the method so i can check it."><div class="libhead"><h4>80/20 first cut</h4><div class="tags"><span class="tag src-itw">ITW prompt</span><span class="tag caution-tag">Sanitized data only</span></div></div><div class="libmeta"><b>80/20 Front-to-Back</b> · Run in: Analyst, or Copilot in Excel</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Using this export, rank customers and products by revenue and margin, identify the A/B splits, and build a customer x product quad view. Show which 20% drives 80% of margin, list data quality issues, and explain the method so I can check it.</pre></div></article><article class="libcard" data-group="80/20 Front-to-Back" data-src="itw" data-text="80/20 front-to-back explore synthesis copilot chat with the files attached from these [interview notes / visit reports], summarize the recurring themes by sub-segment, with the number of mentions and representative evidence for each. separate facts from opinions."><div class="libhead"><h4>Explore synthesis</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>80/20 Front-to-Back</b> · Run in: Copilot Chat with the files attached</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">From these [interview notes / visit reports], summarize the recurring themes by sub-segment, with the number of mentions and representative evidence for each. Separate facts from opinions.</pre></div></article><article class="libcard" data-group="Customer-Back Innovation" data-src="itw" data-text="customer-back innovation pain-point mining copilot chat with the files attached from these [service notes / complaints / field reports], identify the top 10 customer pain points, how often each appears, the cost to the customer, and which could be solved by product change, service change, or ai inside the product."><div class="libhead"><h4>Pain-point mining</h4><div class="tags"><span class="tag src-itw">ITW prompt</span><span class="tag caution-tag">Legal-cleared data only</span></div></div><div class="libmeta"><b>Customer-Back Innovation</b> · Run in: Copilot Chat with the files attached</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">From these [service notes / complaints / field reports], identify the top 10 customer pain points, how often each appears, the cost to the customer, and which could be solved by product change, service change, or AI inside the product.</pre></div></article><article class="libcard" data-group="Customer-Back Innovation" data-src="itw" data-text="customer-back innovation ai-in-the-product scan researcher research how competitors and adjacent industries are embedding ai in [product category] in the last 18 months. cite sources. highlight 3 ideas relevant to [our customer pain point]."><div class="libhead"><h4>AI-in-the-product scan</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Customer-Back Innovation</b> · Run in: Researcher</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Research how competitors and adjacent industries are embedding AI in [product category] in the last 18 months. Cite sources. Highlight 3 ideas relevant to [our customer pain point].</pre></div></article><article class="libcard" data-group="Strategic Sales Excellence" data-src="itw" data-text="strategic sales excellence account plan researcher, or copilot chat (work) build a one-page account plan for [customer] using my emails, meeting notes and public information: their priorities, our position, white space, risks, and the next three actions for the account team."><div class="libhead"><h4>Account plan</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Strategic Sales Excellence</b> · Run in: Researcher, or Copilot Chat (Work)</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Build a one-page account plan for [customer] using my emails, meeting notes and public information: their priorities, our position, white space, risks, and the next three actions for the account team.</pre></div></article><article class="libcard" data-group="Strategic Sales Excellence" data-src="itw" data-text="strategic sales excellence value proposition copilot chat draft a value proposition for [product] for [sub-segment] that quantifies customer value (time, cost, quality). then write the three objections a buyer will raise and how a seller should answer each."><div class="libhead"><h4>Value proposition</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Strategic Sales Excellence</b> · Run in: Copilot Chat</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Draft a value proposition for [product] for [sub-segment] that quantifies customer value (time, cost, quality). Then write the three objections a buyer will raise and how a seller should answer each.</pre></div></article><article class="libcard" data-group="USa + AI" data-src="itw" data-text="usa + ai understand copilot chat with the files attached from these process documents and email threads about [process], map the current steps, handoffs and rework loops. count the steps and list the top pain points with evidence."><div class="libhead"><h4>Understand</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>USa + AI</b> · Run in: Copilot Chat with the files attached</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">From these process documents and email threads about [process], map the current steps, handoffs and rework loops. Count the steps and list the top pain points with evidence.</pre></div></article><article class="libcard" data-group="USa + AI" data-src="itw" data-text="usa + ai simplify, then ai copilot chat here is our simplified [process]. for each remaining step, tell me whether it is repetitive, rules-based and document-heavy. rank which steps ai could execute with a human approving, what data each would need, and the risk if it gets it wrong."><div class="libhead"><h4>Simplify, then AI</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>USa + AI</b> · Run in: Copilot Chat</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Here is our simplified [process]. For each remaining step, tell me whether it is repetitive, rules-based and document-heavy. Rank which steps AI could execute with a human approving, what data each would need, and the risk if it gets it wrong.</pre></div></article><article class="libcard" data-group="Stress-test" data-src="itw" data-text="stress-test second opinion copilot chat · run it on two models i&#x27;m about to decide [decision]. give me the strongest case for, the strongest case against, the assumptions that matter most, and the facts that would change your recommendation."><div class="libhead"><h4>Second opinion</h4><div class="tags"><span class="tag src-itw">ITW prompt</span></div></div><div class="libmeta"><b>Stress-test</b> · Run in: Copilot Chat · run it on two models</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">I&#x27;m about to decide [decision]. Give me the strongest case for, the strongest case against, the assumptions that matter most, and the facts that would change your recommendation.</pre></div></article></div><h3 class="libgroup">Today's session prompts</h3><div class="libgrid"><article class="libcard" data-group="Start here" data-src="session" data-text="start here monday catch-up · sample files (lane a) copilot chat, with the sample email threads file attached review the email threads in this document. list: (1) decisions i owe, (2) commitments others made to me that are still open, (3) emerging risks. owner and source for each. max one page."><div class="libhead"><h4>Monday catch-up · sample files (Lane A)</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Start here</b> · Run in: Copilot Chat, with the sample email threads file attached</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Review the email threads in this document. List: (1) decisions I owe, (2) commitments others made to me that are still open, (3) emerging risks. Owner and source for each. Max one page.</pre></div></article><article class="libcard" data-group="Start here" data-src="session" data-text="start here check it · four follow-ups copilot chat, in the same conversation show me the source for each point.
+
+what did you assume that i did not tell you?
+
+what could you not verify?
+
+give me the strongest case against this."><div class="libhead"><h4>Check it · four follow-ups</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Start here</b> · Run in: Copilot Chat, in the same conversation</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Show me the source for each point.
+
+What did you assume that I did not tell you?
+
+What could you not verify?
+
+Give me the strongest case against this.</pre></div></article><article class="libcard" data-group="Area 1 · Explore the market" data-src="session" data-text="area 1 · explore the market category review with sources researcher provide three things changing in the windshield wiper and washer fluid category that would change how i price or position rain-x over the next twelve months.
+
+name the competitors that matter most to rain-x.
+
+cite every source with its date. tell me plainly what you could not verify."><div class="libhead"><h4>Category review with sources</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 1 · Explore the market</b> · Run in: Researcher</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Provide three things changing in the windshield wiper and washer fluid category that would change how I price or position Rain-X over the next twelve months.
+
+Name the competitors that matter most to Rain-X.
+
+Cite every source with its date. Tell me plainly what you could not verify.</pre></div></article><article class="libcard" data-group="Area 1 · Explore the market" data-src="session" data-text="area 1 · explore the market challenge: make it refuse to guess researcher, same conversation now add: use only sources published in the last eighteen months, and if something is not in those sources say &quot;not in the source&quot; rather than estimating it.
+
+then tell me which of your three findings about the wiper category is the weakest, and why."><div class="libhead"><h4>Challenge: make it refuse to guess</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 1 · Explore the market</b> · Run in: Researcher, same conversation</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now add: use only sources published in the last eighteen months, and if something is not in those sources say &quot;not in the source&quot; rather than estimating it.
+
+Then tell me which of your three findings about the wiper category is the weakest, and why.</pre></div></article><article class="libcard" data-group="Area 2 · Turn data into a decision" data-src="session" data-text="area 2 · turn data into a decision price versus volume analyst in this workbook [reference the workbook using &quot;/&quot;], tell me how much of the change versus last year came from price rather than volume, name every line where volume went backwards and quantify each one.
+
+then show me the insights and calculation in a separate tab.
+
+criteria:
+- strip out winter seasonality and tell me what trend is left underneath it.
+- flag any wiper sku where price and volume are moving in directions that should worry me."><div class="libhead"><h4>Price versus volume</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 2 · Turn data into a decision</b> · Run in: Analyst</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">In this workbook [reference the workbook using &quot;/&quot;], tell me how much of the change versus last year came from price rather than volume, name every line where volume went backwards and quantify each one.
+
+Then show me the insights and calculation in a separate tab.
+
+Criteria:
+- Strip out winter seasonality and tell me what trend is left underneath it.
+- Flag any wiper SKU where price and volume are moving in directions that should worry me.</pre></div></article><article class="libcard" data-group="Area 2 · Turn data into a decision" data-src="session" data-text="area 2 · turn data into a decision challenge: trend, or noise? analyst, same conversation now make it commit: is this a trend or is it noise? do not hedge.
+
+tell me what evidence would settle it, and exactly what you would need to see in next month&#x27;s wiper numbers to change your answer."><div class="libhead"><h4>Challenge: trend, or noise?</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 2 · Turn data into a decision</b> · Run in: Analyst, same conversation</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now make it commit: is this a trend or is it noise? Do not hedge.
+
+Tell me what evidence would settle it, and exactly what you would need to see in next month&#x27;s wiper numbers to change your answer.</pre></div></article><article class="libcard" data-group="Area 3 · Compress the compliance pile" data-src="session" data-text="area 3 · compress the compliance pile affected, not affected, cannot be determined copilot chat with the files attached using only these documents, build me a table of every product with three columns: affected, not affected, or cannot be determined from what i have given you.
+
+quantify the revenue in each column.
+
+where the answer is &quot;cannot be determined&quot;, tell me exactly which document would settle it.
+
+do not resolve gaps yourself. list them under a heading called &quot;open items&quot;."><div class="libhead"><h4>Affected, not affected, cannot be determined</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 3 · Compress the compliance pile</b> · Run in: Copilot Chat with the files attached</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Using only these documents, build me a table of every product with three columns: affected, not affected, or cannot be determined from what I have given you.
+
+Quantify the revenue in each column.
+
+Where the answer is &quot;cannot be determined&quot;, tell me exactly which document would settle it.
+
+Do not resolve gaps yourself. List them under a heading called &quot;Open items&quot;.</pre></div></article><article class="libcard" data-group="Area 3 · Compress the compliance pile" data-src="session" data-text="area 3 · compress the compliance pile challenge: find the contradiction copilot chat, same conversation now ask it where two of these documents disagree with each other.
+
+show me both statements side by side and tell me which one to trust and why."><div class="libhead"><h4>Challenge: find the contradiction</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 3 · Compress the compliance pile</b> · Run in: Copilot Chat, same conversation</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now ask it where two of these documents disagree with each other.
+
+Show me both statements side by side and tell me which one to trust and why.</pre></div></article><article class="libcard" data-group="Area 4 · Prepare the executive briefing" data-src="session" data-text="area 4 · prepare the executive briefing one-page meeting brief copilot chat (work) build me a one-page brief for this meeting. structure it as: my position in two sentences, then three pieces of evidence each with a figure and where it came from, then what i am asking for.
+
+no adjective i cannot defend with a number.
+
+then tell me the two hardest questions i will be asked.
+
+criteria:
+- use my mail, meetings and files from the last 90 days on rain-x and windshield wipers.
+- include where we landed last quarter on rain-x and what has slipped since.
+- cite the mail or document behind each point so i can open it."><div class="libhead"><h4>One-page meeting brief</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 4 · Prepare the executive briefing</b> · Run in: Copilot Chat (Work)</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Build me a one-page brief for this meeting. Structure it as: my position in two sentences, then three pieces of evidence each with a figure and where it came from, then what I am asking for.
+
+No adjective I cannot defend with a number.
+
+Then tell me the two hardest questions I will be asked.
+
+Criteria:
+- Use my mail, meetings and files from the last 90 days on Rain-X and windshield wipers.
+- Include where we landed last quarter on Rain-X and what has slipped since.
+- Cite the mail or document behind each point so I can open it.</pre></div></article><article class="libcard" data-group="Area 4 · Prepare the executive briefing" data-src="session" data-text="area 4 · prepare the executive briefing challenge: the line worth stealing copilot chat, same conversation now add the line worth stealing: give me the strongest argument against my position, and the single fact that would make me change my mind."><div class="libhead"><h4>Challenge: the line worth stealing</h4><div class="tags"><span class="tag tool">Session prompt</span></div></div><div class="libmeta"><b>Area 4 · Prepare the executive briefing</b> · Run in: Copilot Chat, same conversation</div><div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">Now add the line worth stealing: give me the strongest argument against my position, and the single fact that would make me change my mind.</pre></div></article></div><p class="libempty" hidden>No prompts match. Clear the search or choose All.</p></section><!-- ============ BUILDER ============ -->
+  <section id="builder">
+    <h2 class="sec">Build a prompt worth reusing</h2>
+    <p class="intro">The four moves from today, in four boxes. Fill them in and the prompt assembles itself. A prompt you wrote once and run every month is worth more than a clever one you wrote once.</p>
+    <table>
+      <tr><th style="width:22%">Move</th><th style="width:34%">What it does</th><th>Worked on Rain-X</th></tr>
+      <tr>
+        <td><b>The decision</b></td>
+        <td>Name what is actually at stake, not the topic.</td>
+        <td>"You are preparing me for a divisional review where I decide whether to hold the Q4 Rain-X wiper price increase with our largest account or phase it."</td>
+      </tr>
+      <tr>
+        <td><b>The evidence</b></td>
+        <td>Fence what it may use, and forbid the rest.</td>
+        <td>"Use only the Rain-X wiper customer margin sheet and the pricing email thread. If something is not in those two, say 'not in the source' rather than estimating."</td>
+      </tr>
+      <tr>
+        <td><b>The adversary</b></td>
+        <td>Demand the case against you.</td>
+        <td>"Give me the strongest argument against holding the Rain-X increase, and the single fact that would change my mind."</td>
+      </tr>
+      <tr>
+        <td><b>The deliverable</b></td>
+        <td>Say exactly what comes back.</td>
+        <td>"One page. Position in two sentences, three evidence bullets each with a figure and its source, then the counter-case, then one recommendation. No adjective I cannot defend with a number."</td>
+      </tr>
+    </table>
+
+    <div class="plabel">Before and after, on the same Rain-X data</div>
+    <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt weak">Summarise the Rain-X quarter for me.</pre></div>
+    <p class="intro" style="margin-block:10px">Accurate, unobjectionable, useless. It tells you what is in the file, not what to do about it, and it collapses at the first follow-up.</p>
+    <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt">I have to answer one question in Thursday's review: is Rain-X growth in windshield wipers real?
+
+Use only the Rain-X wiper workbook and the business review memo.
+
+Tell me what share of the growth came from price rather than volume, name every wiper line where volume fell, and quantify each.
+
+Then give me the strongest argument that I am over-reading this, and the one fact that would change my mind.
+
+Two-sentence position, three sourced evidence bullets, the counter-case, one recommendation.</pre></div>
+  </section>
+
+  <section id="pack"><h2 class="sec">The sample files (Lane A)</h2><p class="intro"><b>Download them here:</b> <span class="placeholder">[SAMPLE FILES LINK: to be added before the session]</span></p><p class="intro">Everything the presenter uses today, so you can run the same prompts without touching anything confidential. It is one consistent invented world built around Rain-X and the windshield wiper category, so the numbers tie out across every file.</p><table><tr><th>File</th><th style="width:14%">Used in</th><th>What is in it</th></tr><tr><td><b>ITW Rain-X Wiper Category Performance SAMPLE v2.xlsx</b></td><td>Area 2</td><td>24 months of wiper blade and wiper fluid sales by region, channel and SKU, with live formulas: P&amp;L by line, a price/volume/mix bridge, customer margin, orders and backlog.</td></tr><tr><td><b>ITW Rain-X Regulatory Bulletin ICHB Rev 7 SAMPLE v2.docx</b></td><td>Area 3</td><td>A fictional substance restriction affecting wiper fluid, dropping a threshold from 1.0% to 0.1%, with transitional provisions and a volume-based exemption path.</td></tr><tr><td><b>ITW Rain-X Safety Data Sheets SAMPLE v2.docx</b></td><td>Area 3</td><td>Eight product data sheet extracts. Three breach the new threshold, three are clear, and one genuinely cannot be determined from the document.</td></tr><tr><td><b>ITW Rain-X Product Formulation Register SAMPLE v2.xlsx</b></td><td>Area 3</td><td>Product-by-product composition, volume, revenue, reformulation feasibility and cost. One entry contradicts its own data sheet.</td></tr><tr><td><b>ITW Rain-X Q3 Business Review Memo SAMPLE v2.docx</b></td><td>Area 4</td><td>Twelve pages with a deliberately bloated executive summary, a risk register and three vaguely worded asks.</td></tr><tr><td><b>ITW Rain-X Executive Email Threads SAMPLE v2.docx</b></td><td>Start here, Area 4</td><td>Twenty-one messages across five threads on the wiper category, with action items buried mid-paragraph and a planted contradiction in each.</td></tr><tr><td><b>ITW Rain-X Leadership Meeting Transcript SAMPLE v2.docx</b></td><td>Area 4</td><td>Fifty-five minutes, eight speakers, four decisions, seven action items, two deliberately ambiguous about owner or date.</td></tr><tr><td><b>ITW Rain-X Q3 Segment Review DRAFT v4 SAMPLE v2.pptx</b></td><td>Area 4</td><td>A deliberately weak first-draft deck. This is the "before" that the PowerPoint demo fixes.</td></tr></table><p class="intro" style="margin-block-start:14px"><b>All of it is invented.</b> Every figure, plant, customer and person in these files is fictional content created for training. Rain-X is used as a familiar, real ITW brand name so the scenarios feel concrete, but none of the data is ITW data, and none of it should be used for a business decision.</p></section><section id="after"><h2 class="sec">After today</h2><p class="intro">Nothing from a session like this survives the week unless it gets used once. Pick one prompt and run it on your own work before Friday.</p><div class="cards3"><div class="card"><h4>Two-minute survey</h4><p>Tell us what worked and what you want next: <span class="placeholder">[SURVEY LINK: to be added]</span></p></div><div class="card"><h4>Use one prompt this week</h4><p>Start with the one that saves you the most time: the Monday catch-up, Review prep, or the one-page meeting brief.</p></div><div class="card"><h4>The next step</h4><p>Running several steps as one errand with Cowork, building your own agents, and measuring what it is worth. See the Follow-up appendix below.</p></div></div></section><!-- ============ AREA 5 — NEW ============ -->
+  <section id="followup">
+    <h2 class="sec">Appendix · Follow-up: Copilot Cowork<span class="dur">For after today · not covered live</span></h2>
+    <p class="intro">Not part of the live session. Once you are comfortable with the four areas, this is the next step: one instruction that runs all four as a single errand. Cowork availability depends on licensing and tenant configuration.</p>
+    <article class="module">
+      <header>
+        <div class="kicker">Follow-up · optional</div>
+        <h3>The four prompts you just ran, asked for once</h3>
+        <div class="facts"><b>Runs on:</b> Copilot Cowork · <b>Covers:</b> agents and automation for leadership workflows</div>
+        <p class="desc"><b>Use case.</b> Areas 1 to 4 are four separate prompts on four surfaces, each needing you to carry the output into the next. The Rain-X category review comes round every quarter, and so does that whole sequence. Cowork runs the sequence as one errand and hands back the finished deliverables.</p>
+        <div class="tags">
+          <span class="tag cw">Copilot Cowork</span>
+          <span class="tag prod">Product: Rain-X</span>
+          <span class="tag prod">Category: windshield wipers</span>
+        </div>
+      </header>
+      <ol class="units">
+        <li>
+          <div class="unit-head"><span class="u">Unit 1</span><h4>See it · one instruction, four deliverables</h4></div>
+          <div class="unit-body">
+            <p>A single Cowork instruction that reproduces Areas 1 through 4 end to end on Rain-X, and hands back the finished deliverables. The point is the contrast: the same work as the four areas, asked for once.</p>
+            <div class="plabel">Cowork · the collective prompt, Areas 1–4 in one</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt cw">Prepare my quarterly category review for Rain-X in the windshield wipers category, North America. Work through this end to end and give me the finished materials, not a chat answer.
+
+1. Market. Research the windshield wiper and wiper-fluid category with Rain-X as the focus brand: category growth, the competitors that matter most to Rain-X, price-versus-performance positioning, and the channel shift. Cite every source with its date and say what you could not verify.
+
+2. Numbers. Open the Rain-X wiper workbook in my Delivery Materials folder. Split the change versus last year into price and volume, strip out winter seasonality, and name every wiper SKU where volume went backwards. Show the calculation.
+
+3. Compliance. Read the Rain-X wiper-fluid safety data sheets, the formulation register and the regulatory bulletin in the same folder. Give me a product-by-product table — affected, not affected, cannot be determined — with revenue in each column, and flag where any two documents disagree.
+
+4. Briefing. Using 1 to 3 plus my Rain-X mail and meetings from the last 90 days, build a one-page brief: position in two sentences, three sourced evidence bullets, the three decisions that need making, and the strongest argument against my recommendation.
+
+Deliverables: the one-page brief as a Word document, a five-slide deck whose titles state the point, the compliance table as an Excel sheet, and a draft pre-read email to the segment leadership team. No adjective you cannot defend with a number. Flag anything you could not source rather than filling the gap. Base it on [reference the files].</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 2</span><h4>Try it · scope one errand of your own</h4></div>
+          <div class="unit-body">
+            <p class="usecase"><b>Use case.</b> Pick the sequence you repeat every cycle — the monthly close pack, the customer QBR, the compliance re-read — and write it as one instruction instead of five prompts.</p>
+            <div class="plabel">Cowork · prompt, the reusable pattern</div>
+            <div class="promptwrap"><button class="copybtn" type="button" aria-label="Copy this prompt">Copy</button><pre class="prompt cw">Every quarter I rebuild the Rain-X windshield wiper category review by hand. Do the whole thing instead.
+
+Sources: my Rain-X wiper files in [folder], my Rain-X mail and meetings from the last 90 days, and public sources for the wiper category.
+Work: refresh the category view, rerun the price-versus-volume split, re-check the wiper-fluid compliance position, and rebuild the brief.
+Deliverables: the brief, the deck, the table and the draft pre-read.
+Rules: cite everything, flag what changed since last quarter, and tell me what you could not verify.
+
+Then set this to run two days before every Rain-X review.</pre></div>
+          </div>
+        </li>
+        <li>
+          <div class="unit-head"><span class="u">Unit 3</span><h4>Decide · which surface each job belongs to</h4></div>
+          <div class="unit-body">
+            <table>
+              <caption>The rule of thumb: if you would do it in one sitting, use Chat. If you would hand it to someone for an afternoon, that is Cowork.</caption>
+              <tr><th>Surface</th><th>Best at</th><th>Rain-X / windshield wipers example</th></tr>
+              <tr><td><b>Copilot Chat</b></td><td>One question, one answer, right now</td><td>"What's in our latest Rain-X wiper fluid SDS?"</td></tr>
+              <tr><td><b>Researcher</b></td><td>One hard question, investigated and cited</td><td>"Who really competes with Rain-X in wipers, and on what?"</td></tr>
+              <tr><td><b>Analyst</b></td><td>One dataset, reasoned to a conclusion</td><td>"What is our Rain-X wiper blade trend actually telling me?"</td></tr>
+              <tr><td><b>Cowork</b></td><td>A whole errand — many steps, many tools, several deliverables</td><td>"Research the wiper category, analyse the Rain-X numbers, and give me the brief, the deck and the pre-read."</td></tr>
+            </table>
+            <ul class="plain">
+              <li><b>Cowork earns its keep on repetition</b> — the category refresh, the monthly trend, the compliance re-read.</li>
+              <li><b>It stays inside your tenant.</b> Same data boundary, permissions and sensitivity labels as the rest of Microsoft 365 Copilot. This is the question leadership asks first.</li>
+              <li><b>It is metered.</b> Agentic runs consume credits, so scope the ask — point it at the five files that matter, not the whole drive.</li>
+            </ul>
+            <div class="takeaway"><b>The move you are learning.</b> Stop prompting step by step. Describe the whole errand, name the sources, and state the deliverables you want back.</div>
+          </div>
+        </li>
+      </ol>
+    </article>
+  </section>
+
+  
+<footer class="page">
+<p><b>Questions during the session</b>: drop them in the Teams chat. Byron Castillo and Ju Sohng are monitoring Q&amp;A throughout. Anything we cannot answer live comes back in writing after the session.</p>
+<p>ITW Specialty Products VPGM Copilot Enablement · Monday 26 October 2026 · Prepared by the Microsoft account team.</p>
+<p>All demonstration data referenced here is fictional sample content created for enablement. Agent and Cowork availability depends on licensing and tenant configuration.</p>
+</footer>
+</main>
+</div>
+<script>
+(function () {
+  "use strict";
+  var LABEL = "Copy", OK = "Copied", ERR = "Select it";
+
+  function reset(btn) {
+    btn.textContent = LABEL;
+    btn.removeAttribute("data-state");
+  }
+
+  function flash(btn, text, state) {
+    btn.textContent = text;
+    btn.setAttribute("data-state", state);
+    window.setTimeout(function () { reset(btn); }, 1800);
+  }
+
+  function selectPre(pre) {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function legacyCopy(pre) {
+    if (!selectPre(pre)) return false;
+    try { return document.execCommand("copy"); } catch (e) { return false; }
+  }
+
+  document.addEventListener("click", function (ev) {
+    var btn = ev.target.closest ? ev.target.closest(".copybtn") : null;
+    if (!btn) return;
+    var pre = btn.parentNode.querySelector("pre.prompt");
+    if (!pre) return;
+    var text = pre.textContent;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        flash(btn, OK, "done");
+      }, function () {
+        var ok = legacyCopy(pre);
+        flash(btn, ok ? OK : ERR, ok ? "done" : "fail");
+      });
+    } else {
+      var ok = legacyCopy(pre);
+      flash(btn, ok ? OK : ERR, ok ? "done" : "fail");
+    }
+  });
+}());
+
+(function(){
+  "use strict";
+  // highlight [brackets] inside prompts (copy text is unchanged)
+  document.querySelectorAll("pre.prompt").forEach(function(pre){
+    var t = pre.textContent;
+    if (t.indexOf("[") < 0) return;
+    pre.innerHTML = t.replace(/[&<>]/g, function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];})
+                     .replace(/\[[^\]\n]{1,80}\]/g, function(m){return '<mark class="br">'+m+'</mark>';});
+  });
+  // toast after copy
+  var toast = document.createElement("div"); toast.className="toast"; toast.setAttribute("role","status");
+  document.body.appendChild(toast);
+  document.addEventListener("click", function(ev){
+    var b = ev.target.closest ? ev.target.closest(".copybtn") : null; if(!b) return;
+    var pre = b.parentNode.querySelector("pre.prompt");
+    var hasBr = pre && /\[[^\]]+\]/.test(pre.textContent);
+    toast.textContent = hasBr ? "Copied. Paste it into Copilot and replace the [brackets]." : "Copied. Paste it into Copilot.";
+    toast.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){toast.classList.remove("show");},2200);
+  });
+  // library filter
+  var input = document.getElementById("libsearch"); if(!input) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".libcard"));
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+  var count = document.querySelector(".libcount"), empty = document.querySelector(".libempty");
+  var groups = Array.prototype.slice.call(document.querySelectorAll("h3.libgroup"));
+  var filt = "all";
+  function apply(){
+    var q = input.value.trim().toLowerCase(), n = 0;
+    cards.forEach(function(c){
+      var ok = true;
+      if (filt.indexOf("src:")===0) ok = c.dataset.src === filt.slice(4);
+      else if (filt.indexOf("g:")===0) ok = c.dataset.group === filt.slice(2);
+      if (ok && q) ok = q.split(/\s+/).every(function(w){return c.dataset.text.indexOf(w)>=0;});
+      c.hidden = !ok; if(ok) n++;
+    });
+    groups.forEach(function(h){ var g=h.nextElementSibling; h.hidden = !g.querySelector(".libcard:not([hidden])"); });
+    count.textContent = n + (n===1?" prompt":" prompts") + " shown";
+    empty.hidden = n>0;
+  }
+  chips.forEach(function(ch){ ch.addEventListener("click", function(){
+    chips.forEach(function(x){x.classList.remove("on");}); ch.classList.add("on"); filt = ch.dataset.f; apply(); }); });
+  input.addEventListener("input", apply); apply();
+}());
+</script>
+</body>
+</html>
